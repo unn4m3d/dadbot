@@ -32,10 +32,10 @@ Telegram::Bot::Client.run(token) do |bot|
 
       if msg.text == "ping"
         bot.api.send_message(chat_id: msg.chat.id, text: "понг", reply_to_message_id: msg.message_id)
-      elsif msg.reply_to_message and msg.reply_to_message.from.username == me['result']['username']
-        bot.api.send_message(chat_id: msg.chat.id, text: phrases[Random.rand(phrases.size)], reply_to_message_id: msg.message_id)
       elsif r = get_reaction(reactions,msg.text)
         bot.api.send_message(chat_id: msg.chat.id, text: r, reply_to_message_id: msg.message_id, parse_mode:"Markdown")
+      elsif msg.reply_to_message and msg.reply_to_message.from.username == me['result']['username']
+        bot.api.send_message(chat_id: msg.chat.id, text: phrases[Random.rand(phrases.size)], reply_to_message_id: msg.message_id)
       end
 
       bot.api.send_message(chat_id: msg.chat.id,text: "иди хуйца сосни шлюха", reply_to_message_id:msg.message_id) if msg.from.username == "minibobrik"
