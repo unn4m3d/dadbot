@@ -26,19 +26,15 @@ end
 Telegram::Bot::Client.run(token) do |bot|
   me = bot.api.get_me
   puts me.inspect
-  puts "Fuck! I am started!"
   bot.listen do |msg|
     begin
       puts "<#{msg.from.username}> : #{msg.text}"
-      puts "#{msg.reply_to_message.from.username} ? #{me['result']['username']}" if msg.reply_to_message
 
       if msg.text == "ping"
         bot.api.send_message(chat_id: msg.chat.id, text: "понг", reply_to_message_id: msg.message_id)
       elsif msg.reply_to_message and msg.reply_to_message.from.username == me['result']['username']
-        puts "Phrase!"
         bot.api.send_message(chat_id: msg.chat.id, text: phrases[Random.rand(phrases.size)], reply_to_message_id: msg.message_id)
       elsif r = get_reaction(reactions,msg.text)
-        puts "Reaction"
         bot.api.send_message(chat_id: msg.chat.id, text: r, reply_to_message_id: msg.message_id, parse_mode:"Markdown")
       end
 
